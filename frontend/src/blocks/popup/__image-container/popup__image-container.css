@@ -1,0 +1,22 @@
+.popup__image-container {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  left: 50%;
+  top: 15%;
+  transform: translateX(-50%);
+  max-width: max-content;
+}
+
+@media screen and (max-width: 1024px) {
+  .popup__image-container {
+    top: 25%;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .popup__image-container {
+    top: 35%;
+  }
+}

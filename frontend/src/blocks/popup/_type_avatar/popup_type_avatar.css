@@ -1,0 +1,4 @@
+.popup_type_avatar {
+  position: fixed;
+  z-index: 2;
+}

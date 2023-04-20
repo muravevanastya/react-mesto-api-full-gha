@@ -1,0 +1,18 @@
+.profile__ellipse {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.profile__ellipse:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__ellipse {
+    align-self: center;
+    margin: 0;
+  }
+}

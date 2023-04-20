@@ -1,0 +1,19 @@
+.profile__ellipse-pencil {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  object-fit: cover;
+  left: 0;
+  top: 0;
+  height: 120px;
+  width: 120px;
+}
+
+.profile__ellipse-pencil:hover {
+    background-color: rgba(0,0,0,.8);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 26px;
+    cursor: pointer;
+    background-image: url(../../../images/Vector\(2\).svg);
+  }
