@@ -85,7 +85,7 @@ function App() {
       })
       .catch((err) => console.log(err))
     }
-  }, [isLoggedIn])
+  })
 
   function checkToken() {
     const jwt = localStorage.getItem('jwt');
