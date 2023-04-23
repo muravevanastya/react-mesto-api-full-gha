@@ -88,9 +88,9 @@ function App() {
   }, [isLoggedIn])
 
   function checkToken() {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      auth.checkToken(jwt)
+    // const jwt = localStorage.getItem('jwt');
+    // if (jwt) {
+      auth.checkToken()
       .then((res) => {
         if(res) {
           setIsLoggedIn(true);
@@ -99,7 +99,7 @@ function App() {
         }
       })
       .catch(err => console.log(err));
-    }
+    // }
   }
 
   function handleUpdateUser(userData) {
