@@ -31,6 +31,18 @@ function App() {
   const [signupSuccess, setSignupSuccess] = React.useState(false)
   const [isSignupPopupOpen, setSignupPopupOpen] = React.useState(false)
 
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      Promise.all([api.getInitialCards(), api.getUserInfo()])
+      .then(([cards, user]) => {
+        setCards(cards);
+        setCurrentUser(user)
+      })
+      .catch((err) => console.log(err))
+    }
+    checkToken();
+  }, [isLoggedIn])
+
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true)
 }
@@ -80,11 +92,11 @@ function App() {
     if (jwt) {
       auth.checkToken()
       .then((res) => {
-        if(res) {
+        // if(res) {
           setIsLoggedIn(true);
           setEmail(res.data.email);
           navigate('/', {replace: true})
-        }
+        // }
       })
       .catch(err => console.log(err));
     }
@@ -93,18 +105,6 @@ function App() {
   // React.useEffect(() => {
   //   checkToken()
   // })
-
-  React.useEffect(() => {
-    checkToken();
-    if(isLoggedIn) {
-      Promise.all([api.getInitialCards(), api.getUserInfo()])
-      .then(([cards, user]) => {
-        setCards(cards);
-        setCurrentUser(user)
-      })
-      .catch((err) => console.log(err))
-    }
-  }, [isLoggedIn])
 
   function handleUpdateUser(userData) {
     api.setUserInfoApi(userData)

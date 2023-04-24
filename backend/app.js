@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+// const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const auth = require('./middlewares/auth');
@@ -14,34 +14,34 @@ const app = express();
 
 // app.use(cors({ origin: '*' }));
 
-// const allowedCors = [
-//   'https://places.nomoredomains.monster',
-//   'https://api.places.nomoredomains.monster',
-//   'localhost:3000',
-// ];
+const allowedCors = [
+  'https://places.nomoredomains.monster',
+  'https://api.places.nomoredomains.monster',
+  'localhost:3000',
+];
 
-// app.use((req, res, next) => {
-//   const { origin } = req.headers;
-//   const { method } = req;
-//   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-//   const requestHeaders = req.headers['access-control-request-headers'];
+app.use((req, res, next) => {
+  const { origin } = req.headers;
+  const { method } = req;
+  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
+  const requestHeaders = req.headers['access-control-request-headers'];
 
-//   if (allowedCors.includes(origin)) {
-//     res.header('Access-Control-Allow-Origin', origin);
-//     // res.header('Access-Control-Allow-Credentials', 'true');
-//   }
+  if (allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+  }
 
-//   if (method === 'OPTIONS') {
-//     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-//     res.header('Access-Control-Allow-Headers', requestHeaders);
+  if (method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+    res.header('Access-Control-Allow-Headers', requestHeaders);
 
-//     res.status(200).send();
-//   }
+    return res.end();
+  }
 
-//   next();
-// });
+  return next();
+});
 
-app.use(cors());
+// app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
