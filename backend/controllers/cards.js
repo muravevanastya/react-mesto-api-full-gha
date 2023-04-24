@@ -28,6 +28,7 @@ module.exports.createCard = (req, res, next) => {
 module.exports.deleteCard = (req, res, next) => {
   const { cardId } = req.params;
   Card.findById(cardId)
+    .populate(['owner', 'likes'])
     .orFail(() => {
       throw new NotFound('Карточка с таким id не найдена');
     })
@@ -55,6 +56,7 @@ module.exports.likeCard = (req, res, next) => {
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
+    .populate(['owner', 'likes'])
     .then((card) => {
       if (card === null) {
         throw new NotFound('Карточка с таким id не найдена');
@@ -77,6 +79,7 @@ module.exports.dislikeCard = (req, res, next) => {
     { $pull: { likes: req.user._id } },
     { new: true },
   )
+    .populate(['owner', 'likes'])
     .then((card) => {
       if (card === null) {
         throw new NotFound('Карточка с таким id не найдена');
