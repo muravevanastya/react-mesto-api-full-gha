@@ -75,6 +75,25 @@ function App() {
       .catch((err) => console.log(err))
   }
 
+  function checkToken() {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth.checkToken()
+      .then((res) => {
+        if(res) {
+          setIsLoggedIn(true);
+          setEmail(res.data.email);
+          navigate('/', {replace: true})
+        }
+      })
+      .catch(err => console.log(err));
+    }
+  }
+
+  // React.useEffect(() => {
+  //   checkToken()
+  // })
+
   React.useEffect(() => {
     checkToken();
     if(isLoggedIn) {
@@ -86,21 +105,6 @@ function App() {
       .catch((err) => console.log(err))
     }
   }, [isLoggedIn])
-
-  function checkToken() {
-    // const jwt = localStorage.getItem('jwt');
-    // if (jwt) {
-      auth.checkToken()
-      .then((res) => {
-        if(res) {
-          setIsLoggedIn(true);
-          setEmail(res.data.email);
-          navigate('/', {replace: true})
-        }
-      })
-      .catch(err => console.log(err));
-    // }
-  }
 
   function handleUpdateUser(userData) {
     api.setUserInfoApi(userData)

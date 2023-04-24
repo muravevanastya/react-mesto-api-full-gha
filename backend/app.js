@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const auth = require('./middlewares/auth');
@@ -11,32 +12,36 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-const allowedCors = [
-  'https://places.nomoredomains.monster',
-  'https://api.places.nomoredomains.monster',
-  'localhost:3000',
-];
+// app.use(cors({ origin: '*' }));
 
-app.use((req, res, next) => {
-  const { origin } = req.headers;
-  const { method } = req;
-  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-  const requestHeaders = req.headers['access-control-request-headers'];
+// const allowedCors = [
+//   'https://places.nomoredomains.monster',
+//   'https://api.places.nomoredomains.monster',
+//   'localhost:3000',
+// ];
 
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Credentials', 'true');
-  }
+// app.use((req, res, next) => {
+//   const { origin } = req.headers;
+//   const { method } = req;
+//   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
+//   const requestHeaders = req.headers['access-control-request-headers'];
 
-  if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-    res.header('Access-Control-Allow-Headers', requestHeaders);
+//   if (allowedCors.includes(origin)) {
+//     res.header('Access-Control-Allow-Origin', origin);
+//     // res.header('Access-Control-Allow-Credentials', 'true');
+//   }
 
-    return res.status(200).send();
-  }
+//   if (method === 'OPTIONS') {
+//     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+//     res.header('Access-Control-Allow-Headers', requestHeaders);
 
-  next();
-});
+//     res.status(200).send();
+//   }
+
+//   next();
+// });
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

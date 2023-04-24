@@ -1,11 +1,12 @@
-export const BASE_URL = 'https://api.places.nomoredomains.monster/';
+export const BASE_URL = 'https://api.places.nomoredomains.monster';
+// export const BASE_URL = 'https://mesto.nomoreparties.co/v1/cohort-56'
 
 
 const handleResponse = response => response.ok ? response.json() : Promise.reject(`Ошибка ${response.status}`)
 
 export const register = ({password, email}) => {
   return fetch(`${BASE_URL}/signup`, {
-    credentials: 'include',
+    // credentials: 'include',
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -19,7 +20,7 @@ export const register = ({password, email}) => {
 
 export const authorize = (password, email) => {
   return fetch(`${BASE_URL}/signin`, {
-    credentials: 'include',
+    // credentials: 'include',
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -38,7 +39,7 @@ export const authorize = (password, email) => {
 
 export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
-    credentials: 'include',
+    // credentials: 'include',
     method: 'GET',
     headers: {
       "Content-Type": "application/json",
