@@ -13,12 +13,15 @@ const { PORT = 3000 } = process.env;
 const app = express();
 
 const corsConfig = {
+  origin: [
+    'https://api.places.nomoredomains.monster',
+    'https://places.nomoredomains.monster',
+  ],
   credentials: true,
-  origin: true,
-  methods: 'GET, POST, PATCH, PUT, DELETE',
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
   optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'origin'],
 };
 
 // app.use(cors({ origin: '*' }));
