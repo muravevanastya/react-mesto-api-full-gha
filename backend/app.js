@@ -12,6 +12,11 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
+const corsConfig = {
+  credentials: true,
+  origin: true,
+};
+
 // app.use(cors({ origin: '*' }));
 
 // const allowedCors = [
@@ -40,7 +45,7 @@ const app = express();
 //   return next();
 // });
 
-app.use(cors());
+app.use(cors(corsConfig));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
