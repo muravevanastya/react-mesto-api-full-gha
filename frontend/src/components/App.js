@@ -92,11 +92,11 @@ function App() {
     if (jwt) {
       auth.checkToken()
       .then((res) => {
-        // if(res) {
+        if(res) {
           setIsLoggedIn(true);
           setEmail(res.data.email);
           navigate('/', {replace: true})
-        // }
+        }
       })
       .catch(err => console.log(err));
     }

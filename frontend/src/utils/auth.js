@@ -11,7 +11,6 @@ export const register = ({password, email}) => {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('jwt')}`
     },
     body: JSON.stringify({password, email})
   })
@@ -26,7 +25,6 @@ export const authorize = (password, email) => {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('jwt')}`
     },
     body: JSON.stringify({password, email})
   })
@@ -41,7 +39,7 @@ export const authorize = (password, email) => {
 
 export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
-    // credentials: 'include',
+    credentials: 'include',
     method: 'GET',
     headers: {
       "Content-Type": "application/json",
