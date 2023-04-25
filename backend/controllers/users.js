@@ -13,7 +13,6 @@ module.exports.login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, 'super-strong-secret', { expiresIn: '7d' });
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
         sameSite: true,
       })
         .send({ message: 'Авторизация прошла успешно!' });
