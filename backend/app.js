@@ -16,6 +16,9 @@ const corsConfig = {
   credentials: true,
   origin: true,
   methods: 'GET, POST, PATCH, PUT, DELETE',
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 // app.use(cors({ origin: '*' }));
