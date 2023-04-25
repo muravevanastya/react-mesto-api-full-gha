@@ -17,7 +17,6 @@ const app = express();
 const allowedCors = [
   'https://places.nomoredomains.monster',
   'https://api.places.nomoredomains.monster',
-  'localhost:3000',
 ];
 
 app.use((req, res, next) => {

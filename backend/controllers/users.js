@@ -5,6 +5,21 @@ const NotFound = require('../errors/NotFound');
 const BadRequest = require('../errors/BadRequest');
 const Conflict = require('../errors/Conflict');
 
+module.exports.login = (req, res, next) => {
+  const { email, password } = req.body;
+
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign({ _id: user._id }, 'super-strong-secret', { expiresIn: '7d' });
+      res.cookie('jwt', token, {
+        maxAge: 3600000 * 24 * 7,
+        httpOnly: true,
+      })
+        .send({ message: 'Авторизация прошла успешно!' });
+    })
+    .catch(next);
+};
+
 module.exports.getAllUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send({ users }))
@@ -84,21 +99,6 @@ module.exports.updateUserAvatar = (req, res, next) => {
         next(err);
       }
     });
-};
-
-module.exports.login = (req, res, next) => {
-  const { email, password } = req.body;
-
-  return User.findUserByCredentials(email, password)
-    .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'super-strong-secret', { expiresIn: '7d' });
-      res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-      })
-        .send({ message: 'Авторизация прошла успешно!' });
-    })
-    .catch(next);
 };
 
 module.exports.getCurrentUser = (req, res, next) => {
