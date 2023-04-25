@@ -39,7 +39,7 @@ export const authorize = (password, email) => {
 
 export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
-    credentials: 'include',
+    // credentials: 'include',
     method: 'GET',
     headers: {
       "Content-Type": "application/json",
