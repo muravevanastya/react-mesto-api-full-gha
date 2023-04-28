@@ -7,15 +7,33 @@ function EditProfilePopup(props) {
   const [name, setName] = React.useState('')
   const [description, setDescription] = React.useState('')
 
+  const updateUserData = React.useCallback(() => {
+    console.log(currentUser.name)
+    setName(currentUser.name);
+    setDescription(currentUser.about);
+  }, [currentUser]);
+
   React.useEffect(() => {
-    setName(currentUser.name ?? '');
-    setDescription(currentUser.about ?? '');
-  }, [currentUser, props.isOpen]); 
+    updateUserData();
+  }, [currentUser, updateUserData]);
+
+  // React.useEffect(() => {
+  //   console.log(currentUser.name)
+  //   setName(currentUser.name);
+  //   setDescription(currentUser.about);
+  // }, [currentUser, props.isOpen]); 
+
+  // React.useEffect(() => {
+  //   if (currentUser && currentUser.name && currentUser.about) {
+  //     setName(currentUser.name);
+  //     setDescription(currentUser.about);
+  //   }
+  // }, [currentUser, props.isOpen]);
 
   function handleSubmit(e) {
     e.preventDefault();
     props.onUpdateUser({
-      name,
+      name: name,
       about: description,
     });
   } 
@@ -47,7 +65,7 @@ function EditProfilePopup(props) {
       minLength="2" 
       maxLength="40" 
       required
-      value={name}
+      value={name || ''}
       onChange={handleNameChange}
       />
       <span className="profile-name-error popup__error"></span>
@@ -60,7 +78,7 @@ function EditProfilePopup(props) {
       minLength="2"
       maxLength="200" 
       required
-      value={description}
+      value={description || ''}
       onChange={handleDescriptionChange}
       />
       <span className="profile-job-error popup__error"></span>

@@ -12,28 +12,39 @@ class Api {
   }
 
   getUserInfo() {
+    console.log('Вызов getUserInfo');
     return fetch(this._baseUrl + '/users/me', {
-      credentials: 'include',
+      // credentials: 'include',
       method: 'GET',
-      headers: this._headers
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-type': 'application/json'
+      }
     })
       .then(this._checkResponse)
   }
 
   getInitialCards() {
     return fetch(this._baseUrl + '/cards', {
-      credentials: 'include',
+      // credentials: 'include',
       method: 'GET',
-      headers: this._headers
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-type': 'application/json'
+      }
     })
     .then(this._checkResponse)
   }
 
-  setUserInfoApi({name, about}) {
+  setUserInfoApi(name, about) {
+    console.log('Вызов setUserInfo');
     return fetch(this._baseUrl + '/users/me', {
-      credentials: 'include',
+      // credentials: 'include',
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-type': 'application/json'
+      },
       body: JSON.stringify({
         name: name,
         about: about
@@ -44,9 +55,12 @@ class Api {
 
   addUserCard(data) {
     return fetch(this._baseUrl + '/cards', {
-      credentials: 'include',
+      // credentials: 'include',
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-type': 'application/json'
+      },
       body: JSON.stringify({
         name: data.name,
         link: data.link
@@ -57,18 +71,24 @@ class Api {
 
   deleteCard(id) {
     return fetch(this._baseUrl + `/cards/${id}`, {
-      credentials: 'include',
+      // credentials: 'include',
       method: 'DELETE',
-      headers: this._headers
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-type': 'application/json'
+      }
     })
     .then(this._checkResponse)
   }
 
   changeUserAvatar(data) {
     return fetch(this._baseUrl + `/users/me/avatar`, {
-      credentials: 'include',
+      // credentials: 'include',
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-type': 'application/json'
+      },
       body: JSON.stringify({
         avatar: data.avatar,
       })
@@ -78,21 +98,25 @@ class Api {
   
   changeLikeCardStatus(id, isLiked) {
     return fetch(this._baseUrl + `/cards/${id}/likes`, {
-      credentials: 'include',
+      // credentials: 'include',
       method: `${isLiked ? 'PUT' : 'DELETE'}`,
-      headers: this._headers
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-type': 'application/json'
+      }
     })
     .then(this._checkResponse)
   }
 }
 
 const api = new Api({
-  baseUrl: 'https://api.places.nomoredomains.monster',
+  // baseUrl: 'https://api.places.nomoredomains.monster',
   // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-56',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  }
+  baseUrl: 'http://localhost:3000',
+  // headers: {
+  //   'Accept': 'application/json',
+  //   'Content-Type': 'application/json'
+  // }
 })
 
 export {api}

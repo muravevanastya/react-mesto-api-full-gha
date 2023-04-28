@@ -12,20 +12,20 @@ function Header({email, onClick}) {
           element={
             <div className='header__container'>
               <p className='header__email'>{email}</p>
-              <Link to='/sign-in' className='header__signout' onClick={onClick}>Выйти</Link>
+              <Link to='/signin' className='header__signout' onClick={onClick}>Выйти</Link>
             </div>
           }
         />
         <Route
-          path='/sign-up'
+          path='/signup'
           element={
-            <Link to='/sign-in' className='header__link'>Войти</Link>
+            <Link to='/signin' className='header__link'>Войти</Link>
           }
         />
         <Route
-          path='/sign-in'
+          path='/signin'
           element={
-            <Link to='/sign-up' className='header__link'>Регистрация</Link>
+            <Link to='/signup' className='header__link'>Регистрация</Link>
           }
         />
       </Routes>

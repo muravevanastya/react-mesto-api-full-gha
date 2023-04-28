@@ -45,7 +45,7 @@ function Register({onRegister}) {
         required
       />
       <button className="register__button" type="submit">Зарегистрироваться</button>
-      <Link to='/sign-in' className="register__link">Уже зарегестрированы? Войти</Link>
+      <Link to='/signin' className="register__link">Уже зарегестрированы? Войти</Link>
     </form>
   )
 }

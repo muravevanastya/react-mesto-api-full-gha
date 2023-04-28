@@ -31,17 +31,153 @@ function App() {
   const [signupSuccess, setSignupSuccess] = React.useState(false)
   const [isSignupPopupOpen, setSignupPopupOpen] = React.useState(false)
 
+  // const checkToken = useCallback(() => {
+  //   const jwt = localStorage.getItem('jwt');
+  //   if (jwt) {
+  //     auth.checkToken(jwt)
+  //     .then((res) => {
+  //       if(res) {
+  //         setIsLoggedIn(true);
+  //         setEmail(res.email);
+  //         navigate('/', {replace: true})
+  //       }
+  //     })
+  //     .catch(err => console.log(err));
+  //   }
+  // }, [navigate])
+
+  // function checkToken() {
+  //   const jwt = localStorage.getItem('jwt');
+  //   if (jwt) {
+  //     auth.checkToken(jwt)
+  //     .then((res) => {
+  //       if(res && res.data) { //изменено
+  //         setIsLoggedIn(true);
+  //         setEmail(res.data.email);
+  //         navigate('/', {replace: true})
+  //       }
+  //     })
+  //     .catch(err => {
+  //       localStorage.removeItem('jwt'); // изменено
+  //       console.log(err)
+  //     });
+  //   }
+  // }
+
+  // React.useEffect(() => {
+  //   checkToken()
+  // }, [checkToken])
+
+  // React.useEffect(() => {
+  //   if (isLoggedIn) {
+  //     Promise.all([api.getInitialCards(), api.getUserInfo()])
+  //     .then(([cards, user]) => {
+  //       setCards(cards);
+  //       setCurrentUser(user)
+  //     })
+  //     .catch((err) => console.log(err))
+  //   }
+  //   checkToken();
+  // }, [isLoggedIn])
+
+  // function checkToken() {
+  //   const jwt = localStorage.getItem('jwt');
+  //   if (jwt) {
+  //     auth.checkToken()
+  //       .then((res) => {
+  //         if (res) {
+  //           setIsLoggedIn(true);
+  //           setEmail(res.data.email);
+  //           navigate('/', { replace: true })
+  //         }
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }
+  // React.useEffect(() => {
+  //   // checkToken();
+  //   const jwt = localStorage.getItem('jwt');
+  //   if (jwt) {
+  //     Promise.all([api.getInitialCards(), api.getUserInfo()])
+  //       .then(([cards, user]) => {
+  //         setCards(cards);
+  //         setCurrentUser(user);
+  //       })
+  //       .catch((err) => console.log(err))
+  //   }
+  // }, [isLoggedIn])
+
+  // React.useEffect(() => {
+  //   const jwt = localStorage.getItem('jwt');
+  //   if (jwt) {
+  //     auth.checkToken(jwt)
+  //     .then((res) => {
+  //       if (res) {
+  //         setIsLoggedIn(true);
+  //         setEmail(res.email);
+  //         navigate('/', { replace: true })
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       localStorage.removeItem('jwt');
+  //       console.log(err)
+  //     });
+  //   }
+  // }, [navigate, isLoggedIn])
+
   React.useEffect(() => {
-    if (isLoggedIn) {
-      Promise.all([api.getInitialCards(), api.getUserInfo()])
-      .then(([cards, user]) => {
-        setCards(cards);
-        setCurrentUser(user)
-      })
-      .catch((err) => console.log(err))
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      api.getInitialCards()
+        .then((cards) => {
+          setCards([...cards])
+        })
+        .catch((err) => console.log(err))
     }
-    checkToken();
   }, [isLoggedIn])
+
+    React.useEffect(() => {
+    tokenCheck();
+  }, []);
+
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth.checkToken(jwt)
+        .then(res => {
+          if (res) {
+            console.log(res);
+            setCurrentUser({ ...res.user });
+            setIsLoggedIn(true);
+            setEmail(res.email);
+            navigate('/', { replace: true })
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
+
+  // React.useEffect(() => {
+  //   const jwt = localStorage.getItem('jwt');
+  //   if (jwt) {
+  //     api.getUserInfo()
+  //       .then((res) => {
+  //         if (res) {
+  //           console.log(res.user)
+  //           setCurrentUser(res.user)
+  //         }
+  //         // console.log(user)
+  //         // setCurrentUser(user)
+  //       })
+  //       .catch((err) => console.log(err))
+  //   }
+  // }, [isLoggedIn])
+
+  // React.useEffect(() => {
+  //   checkToken()
+  // }, [checkToken])
 
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true)
@@ -69,7 +205,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(id => id === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
@@ -87,38 +223,38 @@ function App() {
       .catch((err) => console.log(err))
   }
 
-  function checkToken() {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      auth.checkToken()
-      .then((res) => {
-        if(res) {
-          setIsLoggedIn(true);
-          setEmail(res.data.email);
-          navigate('/', {replace: true})
-        }
-      })
-      .catch(err => console.log(err));
-    }
-  }
-
-  // React.useEffect(() => {
-  //   checkToken()
-  // })
+  // function handleUpdateUser(userData) {
+  //   api.setUserInfoApi(userData.name, userData.about)
+  //     .then((data) => {
+  //       console.log(data)
+  //       setCurrentUser(data)
+  //       closeAllPopups()
+  //     })
+  //     .catch((err) => console.log(err))
+  // }
 
   function handleUpdateUser(userData) {
-    api.setUserInfoApi(userData)
+    api.setUserInfoApi(userData.name, userData.about)
       .then((data) => {
-        setCurrentUser(data)
-        closeAllPopups()
+        setCurrentUser({
+          ...currentUser,
+          name: data.user.name,
+          about: data.user.about,
+        });
+        closeAllPopups();
       })
-      .catch((err) => console.log(err))
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   function handleUpdateAvatar(userData) {
     api.changeUserAvatar(userData)
       .then((data) => {
-        setCurrentUser(data)
+        setCurrentUser({
+          ...currentUser,
+          avatar: data.user.avatar,
+        })
         closeAllPopups()
       })
       .catch((err) => console.log(err))
@@ -139,7 +275,7 @@ function App() {
           console.log(res);
           setSignupSuccess(true);
           setSignupPopupOpen(true)
-          navigate('/sign-in', {replace: true})
+          navigate('/signin', {replace: true})
       })
       .catch((err) => {
         console.log(err);
@@ -151,9 +287,12 @@ function App() {
   function handleAuth(password, email) {
     auth.authorize(password, email)
       .then(() => {
+        const jwt = localStorage.getItem('jwt');
+        if (jwt) {
           setIsLoggedIn(true);
           setEmail(email);
           navigate('/', {replace: true});
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -190,13 +329,13 @@ function App() {
             isLoggedIn={isLoggedIn} 
             />
             }/>
-          <Route path='/sign-up'
+          <Route path='/signup'
             element={<Register
             onRegister={handleRegister}
             />
           }
           />
-          <Route path='/sign-in'
+          <Route path='/signin'
             element={<Login
             onAuth={handleAuth}/>}
           />
