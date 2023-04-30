@@ -109,9 +109,8 @@ class Api {
 }
 
 const api = new Api({
-  // baseUrl: 'https://api.places.nomoredomains.monster',
-  // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-56',
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'https://api.places.nomoredomains.monster',
+  // baseUrl: 'http://localhost:3000',
   // headers: {
   //   'Accept': 'application/json',
   //   'Content-Type': 'application/json'
