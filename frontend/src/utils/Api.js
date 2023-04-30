@@ -13,7 +13,6 @@ class Api {
 
   getUserInfo() {
     return fetch(this._baseUrl + '/users/me', {
-      // credentials: 'include',
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
@@ -25,7 +24,6 @@ class Api {
 
   getInitialCards() {
     return fetch(this._baseUrl + '/cards', {
-      // credentials: 'include',
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
@@ -38,7 +36,6 @@ class Api {
   setUserInfoApi(name, about) {
     console.log('Вызов setUserInfo');
     return fetch(this._baseUrl + '/users/me', {
-      // credentials: 'include',
       method: 'PATCH',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
@@ -54,7 +51,6 @@ class Api {
 
   addUserCard(data) {
     return fetch(this._baseUrl + '/cards', {
-      // credentials: 'include',
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
@@ -70,7 +66,6 @@ class Api {
 
   deleteCard(id) {
     return fetch(this._baseUrl + `/cards/${id}`, {
-      // credentials: 'include',
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
@@ -82,7 +77,6 @@ class Api {
 
   changeUserAvatar(data) {
     return fetch(this._baseUrl + `/users/me/avatar`, {
-      // credentials: 'include',
       method: "PATCH",
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
@@ -97,7 +91,6 @@ class Api {
   
   changeLikeCardStatus(id, isLiked) {
     return fetch(this._baseUrl + `/cards/${id}/likes`, {
-      // credentials: 'include',
       method: `${isLiked ? 'PUT' : 'DELETE'}`,
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
@@ -109,12 +102,7 @@ class Api {
 }
 
 const api = new Api({
-  // baseUrl: 'https://api.places.nomoredomains.monster',
-  baseUrl: 'http://localhost:3000',
-  // headers: {
-  //   'Accept': 'application/json',
-  //   'Content-Type': 'application/json'
-  // }
+  baseUrl: 'https://api.places.nomoredomains.monster',
 })
 
 export {api}

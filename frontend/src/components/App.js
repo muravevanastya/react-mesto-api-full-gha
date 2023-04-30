@@ -31,113 +31,6 @@ function App() {
   const [signupSuccess, setSignupSuccess] = React.useState(false)
   const [isSignupPopupOpen, setSignupPopupOpen] = React.useState(false)
 
-  // const checkToken = useCallback(() => {
-  //   const jwt = localStorage.getItem('jwt');
-  //   if (jwt) {
-  //     auth.checkToken(jwt)
-  //     .then((res) => {
-  //       if(res) {
-  //         setIsLoggedIn(true);
-  //         setEmail(res.email);
-  //         navigate('/', {replace: true})
-  //       }
-  //     })
-  //     .catch(err => console.log(err));
-  //   }
-  // }, [navigate])
-
-  // function checkToken() {
-  //   const jwt = localStorage.getItem('jwt');
-  //   if (jwt) {
-  //     auth.checkToken(jwt)
-  //     .then((res) => {
-  //       if(res) { //изменено
-  //         setIsLoggedIn(true);
-  //         setEmail(res.email);
-  //         navigate('/', {replace: true})
-  //       }
-  //     })
-  //     .catch(err => {
-  //       localStorage.removeItem('jwt'); // изменено
-  //       console.log(err)
-  //     });
-  //   }
-  // }
-
-  // React.useEffect(() => {
-  //   checkToken()
-  // }, [])
-
-  // React.useEffect(() => {
-  //   const jwt = localStorage.getItem('jwt');
-  //   if (jwt) {
-  //     auth.checkToken(jwt)
-  //     .then((res) => {
-  //       // if(res) { 
-  //         setIsLoggedIn(true);
-  //         setEmail(res.email);
-  //         navigate('/', {replace: true})
-  //       // }
-  //     })
-  //     .catch(err => {
-  //       localStorage.removeItem('jwt');
-  //       console.log(err)
-  //     });
-  //     Promise.all([api.getInitialCards(), api.getUserInfo()])
-  //     .then(([cards, user]) => {
-  //       setCards(cards);
-  //       setCurrentUser(user)
-  //     })
-  //     .catch((err) => console.log(err))
-  //   }
-  //   // checkToken();
-  // }, [navigate, isLoggedIn])
-
-  // function checkToken() {
-  //   const jwt = localStorage.getItem('jwt');
-  //   if (jwt) {
-  //     auth.checkToken()
-  //       .then((res) => {
-  //         if (res) {
-  //           setIsLoggedIn(true);
-  //           setEmail(res.data.email);
-  //           navigate('/', { replace: true })
-  //         }
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // }
-  // React.useEffect(() => {
-  //   // checkToken();
-  //   const jwt = localStorage.getItem('jwt');
-  //   if (jwt) {
-  //     Promise.all([api.getInitialCards(), api.getUserInfo()])
-  //       .then(([cards, user]) => {
-  //         setCards(cards);
-  //         setCurrentUser(user);
-  //       })
-  //       .catch((err) => console.log(err))
-  //   }
-  // }, [isLoggedIn])
-
-  // React.useEffect(() => {
-  //   const jwt = localStorage.getItem('jwt');
-  //   if (jwt) {
-  //     auth.checkToken(jwt)
-  //     .then((res) => {
-  //       if (res) {
-  //         setIsLoggedIn(true);
-  //         setEmail(res.email);
-  //         navigate('/', { replace: true })
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       localStorage.removeItem('jwt');
-  //       console.log(err)
-  //     });
-  //   }
-  // }, [isLoggedIn])
-
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
@@ -159,7 +52,6 @@ function App() {
       auth.checkToken(jwt)
         .then((res) => {
           if (res) {
-            // console.log(res);
             setCurrentUser(res.user);
             setIsLoggedIn(true);
             setEmail(res.email);
@@ -171,26 +63,6 @@ function App() {
         });
     }
   }
-
-  // React.useEffect(() => {
-  //   const jwt = localStorage.getItem('jwt');
-  //   if (jwt) {
-  //     api.getUserInfo()
-  //       .then((res) => {
-  //         if (res) {
-  //           console.log(res.user)
-  //           setCurrentUser(res.user)
-  //         }
-  //         // console.log(user)
-  //         // setCurrentUser(user)
-  //       })
-  //       .catch((err) => console.log(err))
-  //   }
-  // }, [isLoggedIn])
-
-  // React.useEffect(() => {
-  //   checkToken()
-  // }, [checkToken])
 
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true)
@@ -226,26 +98,9 @@ function App() {
       .catch((err) => console.log(err))
   }
 
-  // function handleCardDelete(card) {
-  //   api.deleteCard(card._id)
-  //     .then(() => {
-  //       setCards((state) => 
-  //         state.filter((item) => item._id !== card._id)
-  //       )
-  //     })
-  //     .catch((err) => console.log(err))
-  // }
-
   const handleCardDelete = (card) => {
-    // const isOwn = card.owner._id === currentUser._id;
-    // const isOwn = typeof card.owner === 'string'
-    // ? card.owner === currentUser._id
-    // : card.owner._id === currentUser._id;
-    // if (isOwn) {
       api.deleteCard(card._id)
         .then(() => {
-          // console.log(card.owner._id);
-          // setCurrentUser({ ...currentUser, data: { ...currentUser.data, cards: [...cards] } });
           setCards((state) => 
             state.filter((item) => item._id !== card._id)
           )
@@ -256,16 +111,6 @@ function App() {
         });
     // }
   }
-
-  // function handleUpdateUser(userData) {
-  //   api.setUserInfoApi(userData.name, userData.about)
-  //     .then((data) => {
-  //       console.log(data)
-  //       setCurrentUser(data)
-  //       closeAllPopups()
-  //     })
-  //     .catch((err) => console.log(err))
-  // }
 
   function handleUpdateUser(userData) {
     api.setUserInfoApi(userData.name, userData.about)
@@ -293,15 +138,6 @@ function App() {
       })
       .catch((err) => console.log(err))
   }
-
-  // function handleAddPlaceSubmit(cardData) {
-  //   api.addUserCard(cardData)
-  //     .then((newCard) => {
-  //       setCards([newCard, ...cards])
-  //       closeAllPopups()
-  //     })
-  //     .catch((err) => console.log(err))
-  // }
 
   function handleAddPlaceSubmit(cardData) {
     api.addUserCard(cardData)
@@ -333,19 +169,6 @@ function App() {
   function handleAuth(password, email) {
     auth.authorize(password, email)
       .then(() => {
-        // const jwt = localStorage.getItem('jwt');
-        // if (jwt) {
-        //   setCurrentUser({
-        //     ...currentUser,
-        //     data: userData,
-        //   })
-        // if (res) {
-          // localStorage.setItem('jwt', jwt);
-          // setIsLoggedIn(true);
-          // setEmail(email);
-          // navigate('/', {replace: true});
-        // }
-        // }
         api.getUserInfo()
         .then((res) => {
           setCurrentUser(res.user);

@@ -7,28 +7,11 @@ function EditProfilePopup(props) {
   const [name, setName] = React.useState('')
   const [description, setDescription] = React.useState('')
 
-  // const updateUserData = React.useCallback(() => {
-  //   console.log(currentUser)
-  //   setName(currentUser.name);
-  //   setDescription(currentUser.about);
-  // }, [currentUser]);
-
-  // React.useEffect(() => {
-  //   updateUserData();
-  // }, [currentUser, updateUserData]);
-
   React.useEffect(() => {
     console.log(currentUser)
     setName(currentUser.name);
     setDescription(currentUser.about);
   }, [currentUser, props.isOpen]); 
-
-  // React.useEffect(() => {
-  //   if (currentUser && currentUser.name && currentUser.about) {
-  //     setName(currentUser.name);
-  //     setDescription(currentUser.about);
-  //   }
-  // }, [currentUser, props.isOpen]);
 
   function handleSubmit(e) {
     e.preventDefault();
