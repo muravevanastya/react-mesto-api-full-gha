@@ -1,8 +1,9 @@
+// const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const auth = require('./middlewares/auth');
 const NotFound = require('./errors/NotFound');
@@ -12,24 +13,28 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-const corsConfig = {
-  origin: [
-    'https://api.places.nomoredomains.monster',
-    'https://places.nomoredomains.monster',
-    'http://localhost:3000',
-  ],
-  credentials: true,
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'Authorization', 'origin'],
-};
+// const indexHTML = path.resolve(__dirname, '../frontend/build/index.html');
+
+// const corsConfig = {
+//   origin: [
+//     'https://api.places.nomoredomains.monster',
+//     'https://places.nomoredomains.monster',
+//     'http://localhost:3000',
+//   ],
+//   credentials: true,
+//   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+//   preflightContinue: false,
+//   optionsSuccessStatus: 204,
+//   allowedHeaders: ['Content-Type', 'Authorization', 'origin'],
+// };
 
 // app.use(cors({ origin: '*' }));
 
 // const allowedCors = [
 //   'https://places.nomoredomains.monster',
 //   'https://api.places.nomoredomains.monster',
+//   'http://localhost:3000',
+//   'http://localhost:3001',
 // ];
 
 // app.use((req, res, next) => {
@@ -52,16 +57,18 @@ const corsConfig = {
 
 //   return next();
 // });
-
-app.use(cors(corsConfig));
+app.use(cors());
 
 app.use(bodyParser.json());
+// app.use('/', express.static('build'));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+// app.use(cookieParser());
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
 app.use(requestLogger);
+
+// app.get('/*', (req, res) => res.sendFile(indexHTML));
 
 app.use('/', require('./routes/auth'));
 
