@@ -8,8 +8,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 158.160.103.57
 
-Frontend https://...
+Frontend https://places.nomoredomains.monster
 
-Backend https://...
+Backend https://api.places.nomoredomains.monster
