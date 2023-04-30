@@ -1,8 +1,10 @@
 import React from 'react';
 import headerLogo from '../images/Vector.svg';
 import { Routes, Route, Link } from 'react-router-dom';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Header({email, onClick}) {
+  const currentUser = React.useContext(CurrentUserContext);
   return (
     <header className="header">
       <img src={headerLogo} alt="Место: Россия" className="header__logo"/>
@@ -11,7 +13,7 @@ function Header({email, onClick}) {
           path='/'
           element={
             <div className='header__container'>
-              <p className='header__email'>{email}</p>
+              <p className='header__email'>{currentUser.email}</p>
               <Link to='/signin' className='header__signout' onClick={onClick}>Выйти</Link>
             </div>
           }

@@ -160,7 +160,7 @@ function App() {
         .then((res) => {
           if (res) {
             // console.log(res);
-            setCurrentUser({ ...res.user,  data: res});
+            setCurrentUser(res.user);
             setIsLoggedIn(true);
             setEmail(res.email);
             navigate('/', { replace: true })
@@ -218,7 +218,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(id => id === currentUser._id);
+    const isLiked = card.likes.some(id => id._id === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
@@ -320,23 +320,25 @@ function App() {
 
   function handleAuth(password, email) {
     auth.authorize(password, email)
-      .then((userData) => {
-        const jwt = localStorage.getItem('jwt');
-        if (jwt) {
-          setCurrentUser({
-            ...currentUser,
-            data: userData,
-          })
+      .then(() => {
+        // const jwt = localStorage.getItem('jwt');
+        // if (jwt) {
+        //   setCurrentUser({
+        //     ...currentUser,
+        //     data: userData,
+        //   })
+        // if (res) {
           setIsLoggedIn(true);
           setEmail(email);
           navigate('/', {replace: true});
-        }
+        // }
+        // }
       })
       .catch((err) => {
         console.log(err);
         setSignupPopupOpen(true);
         setSignupSuccess(false);
-      })
+    })
   }
 
   function handleSignOut() {
