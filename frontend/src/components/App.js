@@ -51,9 +51,9 @@ function App() {
   //   if (jwt) {
   //     auth.checkToken(jwt)
   //     .then((res) => {
-  //       if(res && res.data) { //изменено
+  //       if(res) { //изменено
   //         setIsLoggedIn(true);
-  //         setEmail(res.data.email);
+  //         setEmail(res.email);
   //         navigate('/', {replace: true})
   //       }
   //     })
@@ -66,10 +66,23 @@ function App() {
 
   // React.useEffect(() => {
   //   checkToken()
-  // }, [checkToken])
+  // }, [])
 
   // React.useEffect(() => {
-  //   if (isLoggedIn) {
+  //   const jwt = localStorage.getItem('jwt');
+  //   if (jwt) {
+  //     auth.checkToken(jwt)
+  //     .then((res) => {
+  //       // if(res) { 
+  //         setIsLoggedIn(true);
+  //         setEmail(res.email);
+  //         navigate('/', {replace: true})
+  //       // }
+  //     })
+  //     .catch(err => {
+  //       localStorage.removeItem('jwt');
+  //       console.log(err)
+  //     });
   //     Promise.all([api.getInitialCards(), api.getUserInfo()])
   //     .then(([cards, user]) => {
   //       setCards(cards);
@@ -77,8 +90,8 @@ function App() {
   //     })
   //     .catch((err) => console.log(err))
   //   }
-  //   checkToken();
-  // }, [isLoggedIn])
+  //   // checkToken();
+  // }, [navigate, isLoggedIn])
 
   // function checkToken() {
   //   const jwt = localStorage.getItem('jwt');
@@ -123,31 +136,31 @@ function App() {
   //       console.log(err)
   //     });
   //   }
-  // }, [navigate, isLoggedIn])
+  // }, [isLoggedIn])
 
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       api.getInitialCards()
         .then((cards) => {
-          setCards([...cards])
+          setCards([...cards.reverse()])
         })
         .catch((err) => console.log(err))
     }
   }, [isLoggedIn])
 
     React.useEffect(() => {
-    tokenCheck();
+      checkToken();
   }, []);
 
-  const tokenCheck = () => {
+  const checkToken = () => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       auth.checkToken(jwt)
-        .then(res => {
+        .then((res) => {
           if (res) {
-            console.log(res);
-            setCurrentUser({ ...res.user });
+            // console.log(res);
+            setCurrentUser({ ...res.user,  data: res});
             setIsLoggedIn(true);
             setEmail(res.email);
             navigate('/', { replace: true })
@@ -213,14 +226,35 @@ function App() {
       .catch((err) => console.log(err))
   }
 
-  function handleCardDelete(card) {
-    api.deleteCard(card._id)
-      .then(() => {
-        setCards((state) => 
-          state.filter((item) => item._id !== card._id)
-        )
-      })
-      .catch((err) => console.log(err))
+  // function handleCardDelete(card) {
+  //   api.deleteCard(card._id)
+  //     .then(() => {
+  //       setCards((state) => 
+  //         state.filter((item) => item._id !== card._id)
+  //       )
+  //     })
+  //     .catch((err) => console.log(err))
+  // }
+
+  const handleCardDelete = (card) => {
+    // const isOwn = card.owner._id === currentUser._id;
+    // const isOwn = typeof card.owner === 'string'
+    // ? card.owner === currentUser._id
+    // : card.owner._id === currentUser._id;
+    // if (isOwn) {
+      api.deleteCard(card._id)
+        .then(() => {
+          console.log(card.owner._id);
+          // setCurrentUser({ ...currentUser, data: { ...currentUser.data, cards: [...cards] } });
+          setCards((state) => 
+            state.filter((item) => item._id !== card._id)
+          )
+          closeAllPopups();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    // }
   }
 
   // function handleUpdateUser(userData) {
@@ -286,9 +320,13 @@ function App() {
 
   function handleAuth(password, email) {
     auth.authorize(password, email)
-      .then(() => {
+      .then((userData) => {
         const jwt = localStorage.getItem('jwt');
         if (jwt) {
+          setCurrentUser({
+            ...currentUser,
+            data: userData,
+          })
           setIsLoggedIn(true);
           setEmail(email);
           navigate('/', {replace: true});

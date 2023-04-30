@@ -12,7 +12,6 @@ class Api {
   }
 
   getUserInfo() {
-    console.log('Вызов getUserInfo');
     return fetch(this._baseUrl + '/users/me', {
       // credentials: 'include',
       method: 'GET',
