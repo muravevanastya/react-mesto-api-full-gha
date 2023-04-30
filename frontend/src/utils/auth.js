@@ -1,5 +1,5 @@
-export const BASE_URL = 'https://api.places.nomoredomains.monster';
-// export const BASE_URL = 'http://localhost:3000';
+// export const BASE_URL = 'https://api.places.nomoredomains.monster';
+export const BASE_URL = 'http://localhost:3000';
 
 
 const handleResponse = response => response.ok ? response.json() : Promise.reject(`Ошибка ${response.status}`)

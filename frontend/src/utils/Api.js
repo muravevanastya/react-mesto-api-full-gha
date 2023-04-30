@@ -109,8 +109,8 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.places.nomoredomains.monster',
-  // baseUrl: 'http://localhost:3000',
+  // baseUrl: 'https://api.places.nomoredomains.monster',
+  baseUrl: 'http://localhost:3000',
   // headers: {
   //   'Accept': 'application/json',
   //   'Content-Type': 'application/json'

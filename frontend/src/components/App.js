@@ -244,7 +244,7 @@ function App() {
     // if (isOwn) {
       api.deleteCard(card._id)
         .then(() => {
-          console.log(card.owner._id);
+          // console.log(card.owner._id);
           // setCurrentUser({ ...currentUser, data: { ...currentUser.data, cards: [...cards] } });
           setCards((state) => 
             state.filter((item) => item._id !== card._id)
@@ -294,11 +294,23 @@ function App() {
       .catch((err) => console.log(err))
   }
 
+  // function handleAddPlaceSubmit(cardData) {
+  //   api.addUserCard(cardData)
+  //     .then((newCard) => {
+  //       setCards([newCard, ...cards])
+  //       closeAllPopups()
+  //     })
+  //     .catch((err) => console.log(err))
+  // }
+
   function handleAddPlaceSubmit(cardData) {
     api.addUserCard(cardData)
-      .then((newCard) => {
-        setCards([newCard, ...cards])
-        closeAllPopups()
+      .then(() => {
+        return api.getInitialCards();
+      })
+      .then((cards) => {
+        setCards(cards.reverse());
+        closeAllPopups();
       })
       .catch((err) => console.log(err))
   }
