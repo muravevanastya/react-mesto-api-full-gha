@@ -328,11 +328,22 @@ function App() {
         //     data: userData,
         //   })
         // if (res) {
+          // localStorage.setItem('jwt', jwt);
+          // setIsLoggedIn(true);
+          // setEmail(email);
+          // navigate('/', {replace: true});
+        // }
+        // }
+        api.getUserInfo()
+        .then((res) => {
+          setCurrentUser(res.user);
           setIsLoggedIn(true);
-          setEmail(email);
-          navigate('/', {replace: true});
-        // }
-        // }
+          setEmail(res.email);
+          navigate('/', { replace: true })
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       })
       .catch((err) => {
         console.log(err);
