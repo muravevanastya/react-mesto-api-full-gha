@@ -6,7 +6,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.103.57
+IP 158.160.103.57
 
 Frontend https://places.nomoredomains.monster
 
