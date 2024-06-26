@@ -109,7 +109,6 @@ function App() {
         .catch(error => {
           console.log(error);
         });
-    // }
   }
 
   function handleUpdateUser(userData) {

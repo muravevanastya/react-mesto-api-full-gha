@@ -102,7 +102,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.places.nomoredomains.monster',
+  baseUrl: 'http://localhost/api',
 })
 
 export {api}
