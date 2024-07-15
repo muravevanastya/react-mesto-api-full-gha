@@ -102,7 +102,7 @@ class Api {
 }
 
 const api = new Api({
-  : 'http://80.76.60.187:3004',
+  baseUrl: 'http://80.76.60.187:3004',
 })
 
 export {api}
